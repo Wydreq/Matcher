@@ -32,6 +32,15 @@ import AppContainer from "./screens/Application/AppContainer";
 import ForgotPasswordScreen from "./screens/SignIn/ResetPassword/ForgotPasswordScreen";
 import ResetPasswordScreen from "./screens/SignIn/ResetPassword/ResetPasswordScreen";
 import MessageScreen from "./screens/Application/MessageScreen";
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import ProfileInfoScreen from "./screens/Application/ProfilInfoScreen";
+import {
+  faEarthAmerica,
+  faHeart,
+  faHouse,
+  faMessage,
+  faUser,
+} from "@fortawesome/free-solid-svg-icons";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -65,17 +74,25 @@ export function BottomTab() {
       <Tab.Screen
         options={{
           tabBarIcon: ({ focused }) => {
-            return !focused ? (
-              <View>
-                <Image
-                  source={require("../app/images/bottomTabNav/swap.png")}
-                />
-              </View>
-            ) : (
-              <View style={styles.bottomTabIconContainer}>
-                <Image
-                  source={require("../app/images/bottomTabNav/swapFocused.png")}
-                />
+            return (
+              <View style={focused && styles.bottomTabIconContainer}>
+                {focused ? (
+                  <FontAwesomeIcon
+                    icon={faEarthAmerica}
+                    size={30}
+                    style={{
+                      color: "#CF56A1",
+                    }}
+                  />
+                ) : (
+                  <FontAwesomeIcon
+                    icon={faEarthAmerica}
+                    size={30}
+                    style={{
+                      color: "#DDD",
+                    }}
+                  />
+                )}
               </View>
             );
           },
@@ -86,17 +103,25 @@ export function BottomTab() {
       <Tab.Screen
         options={{
           tabBarIcon: ({ focused }) => {
-            return !focused ? (
-              <View>
-                <Image
-                  source={require("../app/images/bottomTabNav/matches.png")}
-                />
-              </View>
-            ) : (
-              <View style={styles.bottomTabIconContainer}>
-                <Image
-                  source={require("../app/images/bottomTabNav/matchesFocused.png")}
-                />
+            return (
+              <View style={focused && styles.bottomTabIconContainer}>
+                {focused ? (
+                  <FontAwesomeIcon
+                    icon={faHeart}
+                    size={30}
+                    style={{
+                      color: "#CF56A1",
+                    }}
+                  />
+                ) : (
+                  <FontAwesomeIcon
+                    icon={faHeart}
+                    size={30}
+                    style={{
+                      color: "#DDD",
+                    }}
+                  />
+                )}
               </View>
             );
           },
@@ -107,17 +132,25 @@ export function BottomTab() {
       <Tab.Screen
         options={{
           tabBarIcon: ({ focused }) => {
-            return !focused ? (
-              <View>
-                <Image
-                  source={require("../app/images/bottomTabNav/home.png")}
-                />
-              </View>
-            ) : (
-              <View style={styles.bottomTabIconContainer}>
-                <Image
-                  source={require("../app/images/bottomTabNav/home.png")}
-                />
+            return (
+              <View style={focused && styles.bottomTabIconContainer}>
+                {focused ? (
+                  <FontAwesomeIcon
+                    icon={faHouse}
+                    size={50}
+                    style={{
+                      color: "#CF56A1",
+                    }}
+                  />
+                ) : (
+                  <FontAwesomeIcon
+                    icon={faHouse}
+                    size={50}
+                    style={{
+                      color: "#DDD",
+                    }}
+                  />
+                )}
               </View>
             );
           },
@@ -128,17 +161,25 @@ export function BottomTab() {
       <Tab.Screen
         options={{
           tabBarIcon: ({ focused }) => {
-            return !focused ? (
-              <View>
-                <Image
-                  source={require("../app/images/bottomTabNav/messages.png")}
-                />
-              </View>
-            ) : (
-              <View style={styles.bottomTabIconContainer}>
-                <Image
-                  source={require("../app/images/bottomTabNav/messagesFocused.png")}
-                />
+            return (
+              <View style={focused && styles.bottomTabIconContainer}>
+                {focused ? (
+                  <FontAwesomeIcon
+                    icon={faMessage}
+                    size={30}
+                    style={{
+                      color: "#CF56A1",
+                    }}
+                  />
+                ) : (
+                  <FontAwesomeIcon
+                    icon={faMessage}
+                    size={30}
+                    style={{
+                      color: "#DDD",
+                    }}
+                  />
+                )}
               </View>
             );
           },
@@ -155,17 +196,25 @@ export function BottomTab() {
         })}
         options={{
           tabBarIcon: ({ focused }) => {
-            return !focused ? (
-              <View>
-                <Image
-                  source={require("../app/images/bottomTabNav/profile.png")}
-                />
-              </View>
-            ) : (
-              <View style={styles.bottomTabIconContainer}>
-                <Image
-                  source={require("../app/images/bottomTabNav/profileFocused.png")}
-                />
+            return (
+              <View style={focused && styles.bottomTabIconContainer}>
+                {focused ? (
+                  <FontAwesomeIcon
+                    icon={faUser}
+                    size={30}
+                    style={{
+                      color: "#CF56A1",
+                    }}
+                  />
+                ) : (
+                  <FontAwesomeIcon
+                    icon={faUser}
+                    size={30}
+                    style={{
+                      color: "#DDD",
+                    }}
+                  />
+                )}
               </View>
             );
           },
@@ -282,6 +331,7 @@ export default function App() {
               component={MessageScreen}
               options={{ title: "", gestureEnabled: false }}
             />
+            <Stack.Screen name="profilInfo" component={ProfileInfoScreen} />
           </Stack.Navigator>
         </NavigationContainer>
       </Provider>

@@ -7,6 +7,7 @@ import {
   ScrollView,
   TouchableOpacity,
 } from "react-native";
+import LocationBlock from "../../components/UI/LocationBlock";
 
 const HomeScreen = () => {
   const location = "Kielce, Poland";
@@ -65,22 +66,7 @@ const HomeScreen = () => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.locationContainer}>
-        <View style={styles.iconTextContainer}>
-          <Image
-            style={styles.locationIcon}
-            source={require("../../images/purpleArrowDown.png")}
-          />
-          <Text style={styles.arrowText}>Location</Text>
-        </View>
-        <View style={styles.iconTextContainer}>
-          <Image
-            style={styles.locationIcon}
-            source={require("../../images/positionPin.png")}
-          />
-          <Text style={styles.pinText}>{location}</Text>
-        </View>
-      </View>
+      <LocationBlock location={location} />
 
       <Text style={styles.text}>Recently Matched</Text>
       <ScrollView
@@ -151,32 +137,6 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-  },
-  locationContainer: {
-    // backgroundColor: "red",
-    height: 100,
-    marginTop: 70,
-    width: "80%",
-    display: "flex",
-  },
-  iconTextContainer: {
-    display: "flex",
-    flexDirection: "row",
-    marginBottom: "3%",
-  },
-  locationIcon: {
-    marginRight: 5,
-    marginTop: "2%",
-  },
-  arrowText: {
-    fontSize: 16,
-    fontFamily: "montMedium",
-  },
-  pinText: {
-    fontSize: 20,
-    fontFamily: "montSBold",
-    color: "#AD439C",
-    marginTop: "1.6%",
   },
 
   text: {

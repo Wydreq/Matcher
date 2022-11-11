@@ -19,6 +19,12 @@ import EditGenderPreference from "../editInfo/editGenderPreference";
 import EditLocation from "../editInfo/EditLocation";
 import SupportScreen from "./SupportScreen";
 import ProfileInfoScreen from "./ProfilInfoScreen";
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import {
+  faGear,
+  faPen,
+  faRightFromBracket,
+} from "@fortawesome/free-solid-svg-icons";
 
 const AppContainer = ({ navigation }: { navigation: any }) => {
   const [loading, setLoading] = useState(true);
@@ -112,10 +118,18 @@ const AppContainer = ({ navigation }: { navigation: any }) => {
                         navigation.navigate("settings");
                       }}
                     >
-                      <Image
-                        style={styles.buttonIcon}
-                        source={require("../../images/me/settingsButton.png")}
-                      />
+                      <View
+                        style={[
+                          styles.settingsButtonContainer,
+                          styles.shadowProp,
+                        ]}
+                      >
+                        <FontAwesomeIcon
+                          icon={faGear}
+                          size={25}
+                          color={"#FFF"}
+                        />
+                      </View>
                       <Text style={styles.btnText}>Settings</Text>
                     </TouchableOpacity>
                   </View>
@@ -125,10 +139,15 @@ const AppContainer = ({ navigation }: { navigation: any }) => {
                         navigation.navigate("edit");
                       }}
                     >
-                      <Image
-                        style={styles.buttonIcon}
-                        source={require("../../images/me/editButton.png")}
-                      />
+                      <View
+                        style={[styles.editButtonContainer, styles.shadowProp]}
+                      >
+                        <FontAwesomeIcon
+                          icon={faPen}
+                          size={25}
+                          color={"#CF56A1"}
+                        />
+                      </View>
                       <Text style={styles.btnText}>Edit info</Text>
                     </TouchableOpacity>
                   </View>
@@ -146,8 +165,10 @@ const AppContainer = ({ navigation }: { navigation: any }) => {
                     logoutHandler();
                   }}
                 >
-                  <Image
-                    source={require("../../images/me/logoutBtnIcon.png")}
+                  <FontAwesomeIcon
+                    icon={faRightFromBracket}
+                    size={20}
+                    color={"#FFF"}
                   />
                   <Text style={styles.logoutText}>Logout</Text>
                 </TouchableOpacity>
@@ -172,7 +193,6 @@ const AppContainer = ({ navigation }: { navigation: any }) => {
       />
       <Drawer.Screen name="editLocation" component={EditLocation} />
       <Drawer.Screen name="support" component={SupportScreen} />
-      <Drawer.Screen name="profilInfo" component={ProfileInfoScreen} />
     </Drawer.Navigator>
   );
 };
@@ -270,6 +290,32 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
+  },
+  settingsButtonContainer: {
+    width: 65,
+    height: 65,
+    backgroundColor: "#CF56A1",
+    borderRadius: 50,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: 10,
+  },
+  editButtonContainer: {
+    width: 65,
+    height: 65,
+    backgroundColor: "#FFF",
+    borderRadius: 50,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: 10,
+  },
+  shadowProp: {
+    shadowColor: "#171717",
+    shadowOffset: { width: -2, height: 4 },
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
   },
 });
 

@@ -7,6 +7,8 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import { faLocationDot, faMessage } from "@fortawesome/free-solid-svg-icons";
 
 interface ProfilInfoScreenProps {
   route: any;
@@ -17,7 +19,7 @@ const ProfileInfoScreen = ({ route, navigation }: ProfilInfoScreenProps) => {
   const hobbies = user.hobbies;
   console.log(hobbies);
 
-  const hobbiesList = hobbies.map((hobby) => {
+  const hobbiesList = hobbies.map((hobby: any) => {
     return (
       <View style={styles.chosenHobbyItem} key={hobby.id}>
         <Text style={styles.chosenHobbyText} key={hobby.id}>
@@ -73,11 +75,13 @@ const ProfileInfoScreen = ({ route, navigation }: ProfilInfoScreenProps) => {
                     color: "#FFF",
                     fontFamily: "montRegular",
                     marginLeft: "5%",
+                    marginRight: 10,
                   }}
                 >{`${user.location}`}</Text>
-                <Image
-                  source={require("../../images/biggerLocationPin.png")}
-                  style={{ marginLeft: 14, marginRight: 6 }}
+                <FontAwesomeIcon
+                  icon={faLocationDot}
+                  size={20}
+                  color={"#CF56A1"}
                 />
                 <Text
                   style={{
@@ -88,7 +92,14 @@ const ProfileInfoScreen = ({ route, navigation }: ProfilInfoScreenProps) => {
                 >{`${user.distance}km`}</Text>
               </View>
             </View>
-            <TouchableOpacity style={styles.messageBtnContainer}>
+            <TouchableOpacity
+              style={styles.messageBtnContainer}
+              onPress={() => {
+                navigation.navigate("message", {
+                  user: user,
+                });
+              }}
+            >
               <View
                 style={{
                   height: 64,
@@ -100,9 +111,7 @@ const ProfileInfoScreen = ({ route, navigation }: ProfilInfoScreenProps) => {
                   justifyContent: "center",
                 }}
               >
-                <Image
-                  source={require("../../images/bottomTabNav/messagesFocused.png")}
-                />
+                <FontAwesomeIcon icon={faMessage} size={25} color={"#CF56A1"} />
               </View>
             </TouchableOpacity>
           </View>
