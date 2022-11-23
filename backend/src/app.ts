@@ -7,6 +7,7 @@ const dotenv = require('dotenv')
 const AuthRoute = require('./routes/AuthRoute')
 const userRoute = require('./routes/userRoute')
 const uploadRoute = require('./routes/uploadRoute')
+const matchesRoute = require('./routes/matchRoute')
 const errorMiddleware = require('./middleware/errorMiddleware')
 const cloudinary = require('cloudinary').v2
 const { CloudinaryStorage } = require('multer-storage-cloudinary')
@@ -41,6 +42,7 @@ app.use(express.json())
 app.use('/api/auth', AuthRoute)
 app.use('/api/user', userRoute)
 app.use('/api/upload-images', upload.array('image'), uploadRoute)
+app.use('/api/matches/', matchesRoute)
 app.use(errorMiddleware)
 
 module.exports = { app, upload }
