@@ -129,6 +129,7 @@ const MatchesScreen = ({ navigation }: MatchesScreenProps) => {
   ];
 
   const usersList = users.map((user) => {
+
     return (
       <TouchableOpacity
         key={user.id}

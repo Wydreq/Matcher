@@ -16,7 +16,10 @@ export const loginCall = async (
   try {
     console.log("ELO");
     console.log(API_URL);
-    const res = await axios.post(API_URL.toString() + "/auth/login", data);
+    const res = await axios.post(
+      "http://192.168.8.151:6000/api/auth/login",
+      data
+    );
     dispatch(requestSuccess());
     return res.data;
   } catch (err: any) {
@@ -27,9 +30,12 @@ export const loginCall = async (
 
       if (error.accountStatus === false) {
         try {
-          await axios.post(API_URL.toString() + "/auth/activate/resend", {
-            email: data.email,
-          });
+          await axios.post(
+            "http://192.168.8.151:6000/api/auth/activate/resend",
+            {
+              email: data.email,
+            }
+          );
           navigate("tokenInput");
         } catch (err: any) {
           if (err.hasOwnProperty("response")) return err.response.data;
@@ -56,7 +62,10 @@ type ActivationData = {
 };
 export const activationCall = async (data: ActivationData) => {
   try {
-    const res = await axios.post(API_URL.toString() + "/auth/activate", data);
+    const res = await axios.post(
+      "http://192.168.8.151:6000/api/auth/activate",
+      data
+    );
 
     return res.data;
   } catch (err: any) {
