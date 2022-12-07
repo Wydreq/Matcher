@@ -152,12 +152,7 @@ const ProfileInfoScreen = ({ route, navigation }: ProfilInfoScreenProps) => {
         </View>
       </View>
       <View style={styles.buttonContainer}>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => {
-            console.warn("Deleting match");
-          }}
-        >
+        <TouchableOpacity style={styles.button} onPress={() => {}}>
           <Text
             style={{ fontSize: 20, color: "#FFF", fontFamily: "montMedium" }}
           >

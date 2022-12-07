@@ -11,7 +11,7 @@ import { API_URL } from "@env";
 export const getUserCall = async (accessToken: string, dispatch: Dispatch) => {
   dispatch(requestStart());
   try {
-    const res = await axios.get("http://192.168.8.151:6000/api/user/", {
+    const res = await axios.get("http://192.168.8.179:6000/api/user/", {
       params: {
         accessToken,
       },
@@ -34,7 +34,7 @@ export const updateUserCall = async (
   dispatch(requestStart());
   try {
     const res = await axios.post(
-      "http://192.168.8.151:6000/api/user/update",
+      "http://192.168.8.179:6000/api/user/update",
       { ...values },
       { params: { accessToken } }
     );
@@ -53,7 +53,7 @@ export const sendCodeCall = async (email: string, dispatch: Dispatch) => {
 
   try {
     const res = await axios.post(
-      "http://192.168.8.151:6000/api/auth/activate/resend",
+      "http://192.168.8.179:6000/api/auth/activate/resend",
       {
         email,
       }
@@ -79,7 +79,7 @@ export const changeEmailCall = async (
   console.log(code);
   try {
     const res = await axios.post(
-      API_URL.toString() + "/user/update/email",
+      "http://192.168.8.179:6000/api/user/update/email",
       { newEmail, code },
       { params: { accessToken } }
     );
@@ -102,7 +102,7 @@ export const checkPasswordCall = async (
   dispatch(requestStart());
   try {
     const res = await axios.post(
-      API_URL.toString() + "/auth/password/check",
+      "http://192.168.8.179:6000/api/auth/password/check",
       { currentPassword },
       { params: { accessToken } }
     );
@@ -123,7 +123,7 @@ export const changePasswordCall = async (
   dispatch(requestStart());
   try {
     const res = await axios.post(
-      "http://192.168.8.151:6000/api/user/update/password",
+      "http://192.168.8.179:6000/api/user/update/password",
       { currentPassword, newPassword },
       { params: { accessToken } }
     );

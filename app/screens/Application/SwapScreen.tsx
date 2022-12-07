@@ -30,10 +30,10 @@ const location = "Kielce, Poland";
 const users = [
   {
     id: "id1",
-    name: "Jakub",
+    name: "Riley",
     desc: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Culpa ab, voluptas cumque similique a veritatis assumenda maxime deserunt aliquam voluptatem.",
     photo: require("../../images/users/zdj1.jpg"),
-    age: 24,
+    age: 21,
     location: "Kielce",
     distance: 2,
     hobbies: [
@@ -48,12 +48,12 @@ const users = [
   },
   {
     id: "id2",
-    name: "Patryk",
+    name: "Chloe",
     desc: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Culpa ab, voluptas cumque similique a veritatis assumenda maxime deserunt aliquam voluptatem.",
     photo: require("../../images/users/zdj2.jpg"),
-    age: 18,
-    location: "Kielce",
-    distance: 2,
+    age: 23,
+    location: "Ostrowiec Św.",
+    distance: 72,
     hobbies: [
       "Art",
       "Football",
@@ -66,12 +66,12 @@ const users = [
   },
   {
     id: "id3",
-    name: "Stanisław",
+    name: "Bella",
     desc: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Culpa ab, voluptas cumque similique a veritatis assumenda maxime deserunt aliquam voluptatem.",
     photo: require("../../images/users/zdj3.jpg"),
-    age: 22,
+    age: 19,
     location: "Kielce",
-    distance: 2,
+    distance: 28,
     hobbies: [
       "Art",
       "Football",
@@ -84,12 +84,12 @@ const users = [
   },
   {
     id: "id4",
-    name: "Kasztan",
+    name: "Tiffany",
     desc: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Culpa ab, voluptas cumque similique a veritatis assumenda maxime deserunt aliquam voluptatem.",
     photo: require("../../images/users/zdj4.jpg"),
-    age: 23,
+    age: 18,
     location: "Kielce",
-    distance: 2,
+    distance: 12,
     hobbies: [
       "Art",
       "Football",
@@ -102,12 +102,12 @@ const users = [
   },
   {
     id: "id5",
-    name: "Zuzia",
+    name: "Angela",
     desc: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Culpa ab, voluptas cumque similique a veritatis assumenda maxime deserunt aliquam voluptatem.",
     photo: require("../../images/users/zdj5.jpg"),
-    age: 19,
-    location: "Kielce",
-    distance: 2,
+    age: 25,
+    location: "Radom",
+    distance: 110,
     hobbies: [
       "Art",
       "Football",
@@ -120,12 +120,12 @@ const users = [
   },
   {
     id: "id6",
-    name: "Agnieszka",
+    name: "Nikki",
     desc: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Culpa ab, voluptas cumque similique a veritatis assumenda maxime deserunt aliquam voluptatem.",
-    age: 20,
-    photo: require("../../images/users/zdj6.png"),
+    age: 23,
+    photo: require("../../images/users/zdj6.jpg"),
     location: "Kielce",
-    distance: 2,
+    distance: 29,
     hobbies: [
       "Art",
       "Football",
@@ -293,7 +293,10 @@ const SwapScreen = ({ navigation }: SwipeScreenProps) => {
       </View>
 
       <View style={styles.buttonsContainer}>
-        <TouchableOpacity style={[styles.circleA, styles.shadowProp]}>
+        <TouchableOpacity
+          onPress={personChangeHandler}
+          style={[styles.circleA, styles.shadowProp]}
+        >
           <FontAwesomeIcon
             icon={faXmark}
             size={45}
@@ -302,7 +305,10 @@ const SwapScreen = ({ navigation }: SwipeScreenProps) => {
             }}
           />
         </TouchableOpacity>
-        <TouchableOpacity style={[styles.circleB, styles.shadowProp]}>
+        <TouchableOpacity
+          onPress={personChangeHandler}
+          style={[styles.circleB, styles.shadowProp]}
+        >
           <FontAwesomeIcon
             icon={faHeart}
             size={40}

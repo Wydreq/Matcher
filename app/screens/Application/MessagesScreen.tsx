@@ -16,27 +16,27 @@ import userSlice from "../../redux/userSlice";
 const messages = [
   {
     id: 1,
-    name: "Wronka",
+    name: "Riley",
     photo: require("../../images/users/zdj1.jpg"),
-    lastMessage: "Ej szczerze",
+    lastMessage: "Yes!",
   },
   {
     id: 2,
-    name: "Wojnollo",
+    name: "Chloe",
     photo: require("../../images/users/zdj6.jpg"),
-    lastMessage: "Jebać C#",
+    lastMessage: "I love you <3",
   },
   {
     id: 3,
-    name: "Alberto",
+    name: "Bella",
     photo: require("../../images/users/zdj7.jpg"),
-    lastMessage: "Kurwa jeden mecz nie wszedł",
+    lastMessage: "How are you?",
   },
   {
     id: 4,
-    name: "Patryk",
+    name: "Tiffany",
     photo: require("../../images/users/zdj4.jpg"),
-    lastMessage: "Siema",
+    lastMessage: "Hey :)",
   },
   {
     id: 5,

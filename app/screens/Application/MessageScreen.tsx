@@ -11,6 +11,7 @@ import {
   KeyboardAvoidingView,
 } from "react-native";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
+import UserMessageModal from "../../components/UI/UserMessageModal";
 
 interface MessageScreenProps {
   route: any;
@@ -19,6 +20,7 @@ interface MessageScreenProps {
 const MessageScreen = ({ route, navigation }: MessageScreenProps) => {
   const user = route.params.user;
   const [enteredMessage, setEnteredMessage] = useState("");
+  const [isModalShowedUp, setIsModalShowedUp] = useState(false);
   const [messages, setMessages] = useState([
     {
       id: 0,
@@ -106,10 +108,17 @@ const MessageScreen = ({ route, navigation }: MessageScreenProps) => {
   return (
     <View>
       <View style={styles.container}>
+        <UserMessageModal
+          modalShow={isModalShowedUp}
+          onCancel={() => {
+            setIsModalShowedUp(false);
+          }}
+        />
         <View style={[styles.header, styles.shadowProp]}>
           <View style={styles.headerContainer}>
             <View style={styles.headerItem}>
               <TouchableOpacity
+                style={{ padding: 15 }}
                 onPress={() => {
                   navigation.goBack();
                 }}
@@ -135,9 +144,14 @@ const MessageScreen = ({ route, navigation }: MessageScreenProps) => {
                 {user.name}
               </Text>
             </View>
-            <View style={styles.headerItem}>
+            <TouchableOpacity
+              style={styles.headerItem}
+              onPress={() => {
+                setIsModalShowedUp(true);
+              }}
+            >
               <Image source={require("../../images/moreBtn.png")} />
-            </View>
+            </TouchableOpacity>
           </View>
         </View>
         <ScrollView
@@ -211,6 +225,7 @@ const styles = StyleSheet.create({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
+    // padding: 10,
   },
   scroll: {
     width: "85%",

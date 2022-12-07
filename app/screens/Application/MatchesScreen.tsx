@@ -20,10 +20,10 @@ const MatchesScreen = ({ navigation }: MatchesScreenProps) => {
   const users = [
     {
       id: "id1",
-      name: "Jakub",
+      name: "Riley",
       desc: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Culpa ab, voluptas cumque similique a veritatis assumenda maxime deserunt aliquam voluptatem.",
       photo: require("../../images/users/zdj1.jpg"),
-      age: 24,
+      age: 21,
       location: "Kielce",
       distance: 2,
       hobbies: [
@@ -38,12 +38,12 @@ const MatchesScreen = ({ navigation }: MatchesScreenProps) => {
     },
     {
       id: "id2",
-      name: "Patryk",
+      name: "Chloe",
       desc: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Culpa ab, voluptas cumque similique a veritatis assumenda maxime deserunt aliquam voluptatem.",
       photo: require("../../images/users/zdj2.jpg"),
-      age: 18,
-      location: "Kielce",
-      distance: 2,
+      age: 23,
+      location: "Ostrowiec Św.",
+      distance: 72,
       hobbies: [
         "Art",
         "Football",
@@ -56,12 +56,12 @@ const MatchesScreen = ({ navigation }: MatchesScreenProps) => {
     },
     {
       id: "id3",
-      name: "Stanisław",
+      name: "Bella",
       desc: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Culpa ab, voluptas cumque similique a veritatis assumenda maxime deserunt aliquam voluptatem.",
       photo: require("../../images/users/zdj3.jpg"),
-      age: 22,
+      age: 19,
       location: "Kielce",
-      distance: 2,
+      distance: 28,
       hobbies: [
         "Art",
         "Football",
@@ -74,12 +74,12 @@ const MatchesScreen = ({ navigation }: MatchesScreenProps) => {
     },
     {
       id: "id4",
-      name: "Kasztan",
+      name: "Tiffany",
       desc: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Culpa ab, voluptas cumque similique a veritatis assumenda maxime deserunt aliquam voluptatem.",
       photo: require("../../images/users/zdj4.jpg"),
-      age: 23,
+      age: 18,
       location: "Kielce",
-      distance: 2,
+      distance: 12,
       hobbies: [
         "Art",
         "Football",
@@ -92,12 +92,12 @@ const MatchesScreen = ({ navigation }: MatchesScreenProps) => {
     },
     {
       id: "id5",
-      name: "Zuzia",
+      name: "Angela",
       desc: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Culpa ab, voluptas cumque similique a veritatis assumenda maxime deserunt aliquam voluptatem.",
       photo: require("../../images/users/zdj5.jpg"),
-      age: 19,
-      location: "Kielce",
-      distance: 2,
+      age: 25,
+      location: "Radom",
+      distance: 110,
       hobbies: [
         "Art",
         "Football",
@@ -110,12 +110,12 @@ const MatchesScreen = ({ navigation }: MatchesScreenProps) => {
     },
     {
       id: "id6",
-      name: "Agnieszka",
+      name: "Nikki",
       desc: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Culpa ab, voluptas cumque similique a veritatis assumenda maxime deserunt aliquam voluptatem.",
-      age: 20,
-      photo: require("../../images/users/zdj6.png"),
+      age: 23,
+      photo: require("../../images/users/zdj6.jpg"),
       location: "Kielce",
-      distance: 2,
+      distance: 29,
       hobbies: [
         "Art",
         "Football",
@@ -129,7 +129,6 @@ const MatchesScreen = ({ navigation }: MatchesScreenProps) => {
   ];
 
   const usersList = users.map((user) => {
-
     return (
       <TouchableOpacity
         key={user.id}
@@ -200,7 +199,7 @@ const MatchesScreen = ({ navigation }: MatchesScreenProps) => {
   return (
     <View style={styles.container}>
       <LocationBlock location={location} />
-      <View style={styles.searchBarContainer}>
+      {/* <View style={styles.searchBarContainer}>
         <Image
           style={styles.searchIcon}
           source={require("../../images/searchIcon.png")}
@@ -210,7 +209,7 @@ const MatchesScreen = ({ navigation }: MatchesScreenProps) => {
           placeholder="Search"
           placeholderTextColor="#ABABAB"
         />
-      </View>
+      </View> */}
       <View style={{ marginTop: "2%", width: "80%" }}>
         <Text
           style={{ fontSize: 24, color: "#1E1E1E", fontFamily: "montMedium" }}

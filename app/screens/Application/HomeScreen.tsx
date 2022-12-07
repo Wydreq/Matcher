@@ -8,59 +8,143 @@ import {
   TouchableOpacity,
 } from "react-native";
 import LocationBlock from "../../components/UI/LocationBlock";
-
-const HomeScreen = () => {
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
+interface HomeScreenProps {
+  navigation: any;
+}
+const HomeScreen = ({ navigation }: HomeScreenProps) => {
   const location = "Kielce, Poland";
 
   const users = [
     {
       id: "id1",
-      name: "Ilona",
-      photo: require("../../images/users/user1.png"),
-      age: 25,
+      name: "Riley",
+      desc: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Culpa ab, voluptas cumque similique a veritatis assumenda maxime deserunt aliquam voluptatem.",
+      photo: require("../../images/users/zdj1.jpg"),
+      age: 21,
+      location: "Kielce",
+      distance: 2,
+      hobbies: [
+        "Art",
+        "Football",
+        "Swimming",
+        "Travel",
+        "Gym",
+        "React programming",
+        "DIY",
+      ],
     },
     {
       id: "id2",
-      name: "Wiktoria",
-      photo: require("../../images/users/user2.png"),
-      age: 18,
+      name: "Chloe",
+      desc: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Culpa ab, voluptas cumque similique a veritatis assumenda maxime deserunt aliquam voluptatem.",
+      photo: require("../../images/users/zdj2.jpg"),
+      age: 23,
+      location: "Ostrowiec Św.",
+      distance: 72,
+      hobbies: [
+        "Art",
+        "Football",
+        "Swimming",
+        "Travel",
+        "Gym",
+        "React programming",
+        "DIY",
+      ],
     },
     {
       id: "id3",
-      name: "Magda",
-      photo: require("../../images/users/user3.png"),
-      age: 22,
+      name: "Bella",
+      desc: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Culpa ab, voluptas cumque similique a veritatis assumenda maxime deserunt aliquam voluptatem.",
+      photo: require("../../images/users/zdj3.jpg"),
+      age: 19,
+      location: "Kielce",
+      distance: 28,
+      hobbies: [
+        "Art",
+        "Football",
+        "Swimming",
+        "Travel",
+        "Gym",
+        "React programming",
+        "DIY",
+      ],
     },
     {
       id: "id4",
-      name: "Julia",
-      photo: require("../../images/users/user4.png"),
-      age: 23,
+      name: "Tiffany",
+      desc: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Culpa ab, voluptas cumque similique a veritatis assumenda maxime deserunt aliquam voluptatem.",
+      photo: require("../../images/users/zdj4.jpg"),
+      age: 18,
+      location: "Kielce",
+      distance: 12,
+      hobbies: [
+        "Art",
+        "Football",
+        "Swimming",
+        "Travel",
+        "Gym",
+        "React programming",
+        "DIY",
+      ],
     },
     {
       id: "id5",
-      name: "Zuzia",
-      photo: require("../../images/users/user5.png"),
-      age: 19,
+      name: "Angela",
+      desc: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Culpa ab, voluptas cumque similique a veritatis assumenda maxime deserunt aliquam voluptatem.",
+      photo: require("../../images/users/zdj5.jpg"),
+      age: 25,
+      location: "Radom",
+      distance: 110,
+      hobbies: [
+        "Art",
+        "Football",
+        "Swimming",
+        "Travel",
+        "Gym",
+        "React programming",
+        "DIY",
+      ],
     },
     {
       id: "id6",
-      name: "Agnieszka",
-      photo: require("../../images/users/user6.png"),
-      age: 20,
+      name: "Nikki",
+      desc: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Culpa ab, voluptas cumque similique a veritatis assumenda maxime deserunt aliquam voluptatem.",
+      age: 23,
+      photo: require("../../images/users/zdj6.jpg"),
+      location: "Kielce",
+      distance: 29,
+      hobbies: [
+        "Art",
+        "Football",
+        "Swimming",
+        "Travel",
+        "Gym",
+        "React programming",
+        "DIY",
+      ],
     },
   ];
 
   const usersList = users.map((user) => {
     return (
-      <View style={styles.matchedItemContainer} key={user.id}>
+      <TouchableOpacity
+        key={user.id}
+        onPress={() => {
+          navigation.navigate("profilInfo", {
+            user: user,
+          });
+        }}
+        style={styles.matchedItemContainer}
+      >
         <View style={styles.matchedItem}>
           <Image
             style={{ width: "100%", height: "100%" }}
             source={user.photo}
           />
         </View>
-      </View>
+      </TouchableOpacity>
     );
   });
 
@@ -78,10 +162,22 @@ const HomeScreen = () => {
       </ScrollView>
       <View style={styles.nearbyContainer}>
         <Text style={styles.text2}>Near You</Text>
-        <TouchableOpacity style={styles.viewAllButton}>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate("SwapScreen");
+          }}
+          style={styles.viewAllButton}
+        >
           <Text style={styles.viewAllButtonText}>View All</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.userNearYou}>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate("profilInfo", {
+              user: users[2],
+            });
+          }}
+          style={styles.userNearYou}
+        >
           <Image
             style={{
               width: "100%",
@@ -89,39 +185,57 @@ const HomeScreen = () => {
               borderRadius: 14,
               position: "absolute",
             }}
-            source={require("../../images/users/bigUser.png")}
+            source={users[2].photo}
           />
           <View style={styles.nearbyUserInfo}>
             <Text
               style={{
                 fontFamily: "montBold",
                 color: "#FFF",
-                fontSize: 24,
+                fontSize: 30,
                 width: "100%",
+                marginLeft: 5,
               }}
             >
-              Mia, 25
+              {`${users[2].name}, ${users[2].age}`}
             </Text>
-            <Text
+            <View
               style={{
-                fontFamily: "montRegular",
-                color: "#FFF",
-                fontSize: 13,
-                width: "50%",
+                display: "flex",
+                flexDirection: "row",
+                marginTop: "1%",
+                marginLeft: 5,
               }}
             >
-              Kielce, Poland
-            </Text>
-            <Text
-              style={{
-                fontFamily: "montRegular",
-                color: "#FFF",
-                fontSize: 13,
-                width: "50%",
-              }}
-            >
-              8km
-            </Text>
+              <Text
+                style={{
+                  fontFamily: "montRegular",
+                  color: "#FFF",
+                  fontSize: 20,
+                  marginRight: 10,
+                }}
+              >
+                {users[2].location}
+              </Text>
+              <FontAwesomeIcon
+                icon={faLocationDot}
+                size={20}
+                style={{
+                  color: "#CF56A1",
+                  marginTop: 2,
+                  marginRight: 2,
+                }}
+              />
+              <Text
+                style={{
+                  fontFamily: "montRegular",
+                  color: "#FFF",
+                  fontSize: 20,
+                }}
+              >
+                {`${users[2].distance} km`}
+              </Text>
+            </View>
           </View>
         </TouchableOpacity>
       </View>
@@ -215,11 +329,12 @@ const styles = StyleSheet.create({
   },
   nearbyUserInfo: {
     position: "relative",
-    top: "70%",
+    top: "75%",
     left: 0,
     width: "100%",
-    height: "30%",
-    backgroundColor: "rgba(255, 255, 255, 0.1)",
+    height: "25%",
+    backgroundColor: "rgba(0, 0, 0, 0.2)",
+    borderRadius: 18,
     padding: 5,
   },
 });
