@@ -8,11 +8,12 @@ exports.randomPeople = async (
   next: Function
 ) => {
   const user = req.user
-  const { city } = req.body
+  const { city } = req.query
 
   try {
-    const matchedUser = await User.aggregate([
+    let matchedUser = await User.aggregate([
       { $match: { city } },
+      { $match: { username: { $not: { $regex: user.username } } } },
       { $sample: { size: 1 } },
     ])
 

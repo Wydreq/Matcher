@@ -5,183 +5,213 @@ import {
   Image,
   ImageBackground,
   TouchableOpacity,
-} from "react-native";
+} from 'react-native'
 import Animated, {
   RotateInDownLeft,
   useAnimatedGestureHandler,
   useAnimatedStyle,
   useSharedValue,
   withSpring,
-} from "react-native-reanimated";
-import LocationBlock from "../../components/UI/LocationBlock";
-import { PanGestureHandler } from "react-native-gesture-handler";
-import { useState } from "react";
-import { runOnJS } from "react-native-reanimated";
-import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+} from 'react-native-reanimated'
+import LocationBlock from '../../components/UI/LocationBlock'
+import { PanGestureHandler } from 'react-native-gesture-handler'
+import { useEffect, useState } from 'react'
+import { runOnJS } from 'react-native-reanimated'
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
+import { getPerson } from '../../controllers/matchController'
 import {
   faInfoCircle,
   faXmark,
   faHeart,
   faLocationDot,
-} from "@fortawesome/free-solid-svg-icons";
+} from '@fortawesome/free-solid-svg-icons'
+import { useDispatch, useSelector } from 'react-redux'
 
-const location = "Kielce, Poland";
+const location = 'Kielce, Poland'
 
 const users = [
   {
-    id: "id1",
-    name: "Riley",
-    desc: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Culpa ab, voluptas cumque similique a veritatis assumenda maxime deserunt aliquam voluptatem.",
-    photo: require("../../images/users/zdj1.jpg"),
+    id: 'id1',
+    name: 'Riley',
+    desc: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Culpa ab, voluptas cumque similique a veritatis assumenda maxime deserunt aliquam voluptatem.',
+    photo: require('../../images/users/zdj1.jpg'),
     age: 21,
-    location: "Kielce",
+    location: 'Kielce',
     distance: 2,
     hobbies: [
-      "Art",
-      "Football",
-      "Swimming",
-      "Travel",
-      "Gym",
-      "React programming",
-      "DIY",
+      'Art',
+      'Football',
+      'Swimming',
+      'Travel',
+      'Gym',
+      'React programming',
+      'DIY',
     ],
   },
   {
-    id: "id2",
-    name: "Chloe",
-    desc: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Culpa ab, voluptas cumque similique a veritatis assumenda maxime deserunt aliquam voluptatem.",
-    photo: require("../../images/users/zdj2.jpg"),
+    id: 'id2',
+    name: 'Chloe',
+    desc: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Culpa ab, voluptas cumque similique a veritatis assumenda maxime deserunt aliquam voluptatem.',
+    photo: require('../../images/users/zdj2.jpg'),
     age: 23,
-    location: "Ostrowiec Św.",
+    location: 'Ostrowiec Św.',
     distance: 72,
     hobbies: [
-      "Art",
-      "Football",
-      "Swimming",
-      "Travel",
-      "Gym",
-      "React programming",
-      "DIY",
+      'Art',
+      'Football',
+      'Swimming',
+      'Travel',
+      'Gym',
+      'React programming',
+      'DIY',
     ],
   },
   {
-    id: "id3",
-    name: "Bella",
-    desc: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Culpa ab, voluptas cumque similique a veritatis assumenda maxime deserunt aliquam voluptatem.",
-    photo: require("../../images/users/zdj3.jpg"),
+    id: 'id3',
+    name: 'Bella',
+    desc: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Culpa ab, voluptas cumque similique a veritatis assumenda maxime deserunt aliquam voluptatem.',
+    photo: require('../../images/users/zdj3.jpg'),
     age: 19,
-    location: "Kielce",
+    location: 'Kielce',
     distance: 28,
     hobbies: [
-      "Art",
-      "Football",
-      "Swimming",
-      "Travel",
-      "Gym",
-      "React programming",
-      "DIY",
+      'Art',
+      'Football',
+      'Swimming',
+      'Travel',
+      'Gym',
+      'React programming',
+      'DIY',
     ],
   },
   {
-    id: "id4",
-    name: "Tiffany",
-    desc: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Culpa ab, voluptas cumque similique a veritatis assumenda maxime deserunt aliquam voluptatem.",
-    photo: require("../../images/users/zdj4.jpg"),
+    id: 'id4',
+    name: 'Tiffany',
+    desc: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Culpa ab, voluptas cumque similique a veritatis assumenda maxime deserunt aliquam voluptatem.',
+    photo: require('../../images/users/zdj4.jpg'),
     age: 18,
-    location: "Kielce",
+    location: 'Kielce',
     distance: 12,
     hobbies: [
-      "Art",
-      "Football",
-      "Swimming",
-      "Travel",
-      "Gym",
-      "React programming",
-      "DIY",
+      'Art',
+      'Football',
+      'Swimming',
+      'Travel',
+      'Gym',
+      'React programming',
+      'DIY',
     ],
   },
   {
-    id: "id5",
-    name: "Angela",
-    desc: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Culpa ab, voluptas cumque similique a veritatis assumenda maxime deserunt aliquam voluptatem.",
-    photo: require("../../images/users/zdj5.jpg"),
+    id: 'id5',
+    name: 'Angela',
+    desc: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Culpa ab, voluptas cumque similique a veritatis assumenda maxime deserunt aliquam voluptatem.',
+    photo: require('../../images/users/zdj5.jpg'),
     age: 25,
-    location: "Radom",
+    location: 'Radom',
     distance: 110,
     hobbies: [
-      "Art",
-      "Football",
-      "Swimming",
-      "Travel",
-      "Gym",
-      "React programming",
-      "DIY",
+      'Art',
+      'Football',
+      'Swimming',
+      'Travel',
+      'Gym',
+      'React programming',
+      'DIY',
     ],
   },
   {
-    id: "id6",
-    name: "Nikki",
-    desc: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Culpa ab, voluptas cumque similique a veritatis assumenda maxime deserunt aliquam voluptatem.",
+    id: 'id6',
+    name: 'Nikki',
+    desc: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Culpa ab, voluptas cumque similique a veritatis assumenda maxime deserunt aliquam voluptatem.',
     age: 23,
-    photo: require("../../images/users/zdj6.jpg"),
-    location: "Kielce",
+    photo: require('../../images/users/zdj6.jpg'),
+    location: 'Kielce',
     distance: 29,
     hobbies: [
-      "Art",
-      "Football",
-      "Swimming",
-      "Travel",
-      "Gym",
-      "React programming",
-      "DIY",
+      'Art',
+      'Football',
+      'Swimming',
+      'Travel',
+      'Gym',
+      'React programming',
+      'DIY',
     ],
   },
-];
+]
 
 interface SwipeScreenProps {
-  navigation: any;
+  navigation: any
 }
 const SwapScreen = ({ navigation }: SwipeScreenProps) => {
-  const translateX = useSharedValue(0);
-  const translateY = useSharedValue(0);
-  const [isPointedYes, setIsPointedYes] = useState(false);
-  const [isPointedNo, setIsPointedNo] = useState(false);
-  const [personIndex, setPersonIndex] = useState(0);
+  const translateX = useSharedValue(0)
+  const translateY = useSharedValue(0)
+  const [isPointedYes, setIsPointedYes] = useState(false)
+  const [isPointedNo, setIsPointedNo] = useState(false)
+  const [personIndex, setPersonIndex] = useState(0)
+  const [person, setPerson] = useState(null)
+  const [error, setError] = useState()
+  const [loading, setLoading] = useState(true)
+  const dispatch = useDispatch()
+
+  const state = useSelector((state: any) => state.userData)
+
+  const loadPerson = async () => {
+    setLoading(true)
+    const result = await getPerson(state.accessToken, dispatch, 'Kielce')
+    console.log(result)
+    if (result.success) {
+      setPerson(result.message)
+      setLoading(false)
+    } else {
+      setError(result.message)
+      setLoading(false)
+    }
+  }
+  useEffect(() => {
+    let isMounted = true
+
+    isMounted && loadPerson()
+
+    return () => {
+      isMounted = false
+    }
+  }, [])
 
   const personChangeHandler = () => {
     if (personIndex < 5) {
-      setPersonIndex((current) => current + 1);
+      setPersonIndex((current) => current + 1)
     } else {
-      setPersonIndex(0);
+      setPersonIndex(0)
     }
-  };
+  }
 
   const panGestureEvent = useAnimatedGestureHandler({
     onStart: (event, context) => {
-      context.translateX = translateX.value;
+      context.translateX = translateX.value
     },
     onActive: (event, context) => {
-      translateX.value = event.translationX + context.translateX;
+      translateX.value = event.translationX + context.translateX
       if (translateX.value < -100) {
-        runOnJS(setIsPointedNo)(true);
+        runOnJS(setIsPointedNo)(true)
       } else if (translateX.value > 100) {
-        runOnJS(setIsPointedYes)(true);
+        runOnJS(setIsPointedYes)(true)
       } else {
-        runOnJS(setIsPointedNo)(false);
-        runOnJS(setIsPointedYes)(false);
+        runOnJS(setIsPointedNo)(false)
+        runOnJS(setIsPointedYes)(false)
       }
     },
     onEnd: (event) => {
       if (translateX.value < -100) {
-        runOnJS(personChangeHandler)();
+        runOnJS(personChangeHandler)()
       } else if (translateX.value > 100) {
-        runOnJS(personChangeHandler)();
+        runOnJS(personChangeHandler)()
       }
-      runOnJS(setIsPointedNo)(false);
-      runOnJS(setIsPointedYes)(false);
-      translateX.value = withSpring(0);
+      runOnJS(setIsPointedNo)(false)
+      runOnJS(setIsPointedYes)(false)
+      translateX.value = withSpring(0)
     },
-  });
+  })
 
   const rStyle = useAnimatedStyle(() => {
     return {
@@ -190,106 +220,108 @@ const SwapScreen = ({ navigation }: SwipeScreenProps) => {
           translateX: translateX.value,
         },
       ],
-    };
-  });
+    }
+  })
 
   return (
     <View style={styles.container}>
       <LocationBlock location={location} />
       <View style={[styles.gestureContainer, styles.shadowProp]}>
-        <PanGestureHandler onGestureEvent={panGestureEvent}>
-          <Animated.View style={[styles.personContainer, rStyle]}>
-            <ImageBackground
-              source={users[personIndex].photo}
-              style={{ width: "100%", height: "100%" }}
-            >
-              {isPointedYes && <Text style={styles.yesLabel}>YES</Text>}
-              {isPointedNo && <Text style={styles.noLabel}>NO</Text>}
-              <View style={styles.personInformationContainer}>
-                {/* Info Container */}
-                <View
-                  style={{
-                    width: "75%",
-                    height: "100%",
-                    display: "flex",
-                    flexDirection: "column",
-                  }}
-                >
-                  <Text
-                    style={{
-                      fontSize: 30,
-                      color: "#FFF",
-                      fontFamily: "montBold",
-                      marginTop: 10,
-                      overflow: "hidden",
-                      flexWrap: "nowrap",
-                    }}
-                  >{`${users[personIndex].name}, ${users[personIndex].age}`}</Text>
+        {!loading && (
+          <PanGestureHandler onGestureEvent={panGestureEvent}>
+            <Animated.View style={[styles.personContainer, rStyle]}>
+              <ImageBackground
+                source={users[personIndex].photo}
+                style={{ width: '100%', height: '100%' }}
+              >
+                {isPointedYes && <Text style={styles.yesLabel}>YES</Text>}
+                {isPointedNo && <Text style={styles.noLabel}>NO</Text>}
+                <View style={styles.personInformationContainer}>
+                  {/* Info Container */}
                   <View
                     style={{
-                      width: "60%",
-                      display: "flex",
-                      flexDirection: "row",
-                      alignItems: "center",
-                      marginTop: 5,
+                      width: '75%',
+                      height: '100%',
+                      display: 'flex',
+                      flexDirection: 'column',
                     }}
                   >
                     <Text
                       style={{
-                        fontSize: 16,
-                        color: "#FFF",
-                        fontFamily: "montRegular",
-                        marginRight: 10,
+                        fontSize: 30,
+                        color: '#FFF',
+                        fontFamily: 'montBold',
+                        marginTop: 10,
+                        overflow: 'hidden',
+                        flexWrap: 'nowrap',
+                      }}
+                    >{`${users[personIndex].name}, ${users[personIndex].age}`}</Text>
+                    <View
+                      style={{
+                        width: '60%',
+                        display: 'flex',
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        marginTop: 5,
                       }}
                     >
-                      {users[personIndex].location}
-                    </Text>
-                    <FontAwesomeIcon
-                      icon={faLocationDot}
-                      size={20}
-                      style={{ color: "#CF56A1" }}
-                    />
+                      <Text
+                        style={{
+                          fontSize: 16,
+                          color: '#FFF',
+                          fontFamily: 'montRegular',
+                          marginRight: 10,
+                        }}
+                      >
+                        {users[personIndex].location}
+                      </Text>
+                      <FontAwesomeIcon
+                        icon={faLocationDot}
+                        size={20}
+                        style={{ color: '#CF56A1' }}
+                      />
+                      <Text
+                        style={{
+                          fontSize: 16,
+                          fontFamily: 'montRegular',
+                          color: '#FFF',
+                          marginLeft: 5,
+                        }}
+                      >
+                        {users[personIndex].distance}km
+                      </Text>
+                    </View>
                     <Text
                       style={{
-                        fontSize: 16,
-                        fontFamily: "montRegular",
-                        color: "#FFF",
-                        marginLeft: 5,
+                        fontSize: 14,
+                        color: '#FFF',
+                        fontFamily: 'montRegular',
+                        marginTop: 5,
                       }}
                     >
-                      {users[personIndex].distance}km
+                      {`${users[personIndex].desc.slice(0, 50)}...`}
                     </Text>
                   </View>
-                  <Text
-                    style={{
-                      fontSize: 14,
-                      color: "#FFF",
-                      fontFamily: "montRegular",
-                      marginTop: 5,
+                  <TouchableOpacity
+                    onPress={() => {
+                      navigation.navigate('profilInfo', {
+                        user: users[personIndex],
+                      })
                     }}
                   >
-                    {`${users[personIndex].desc.slice(0, 50)}...`}
-                  </Text>
+                    <FontAwesomeIcon
+                      icon={faInfoCircle}
+                      size={40}
+                      style={{
+                        color: '#CF56A1',
+                      }}
+                    />
+                  </TouchableOpacity>
                 </View>
-                <TouchableOpacity
-                  onPress={() => {
-                    navigation.navigate("profilInfo", {
-                      user: users[personIndex],
-                    });
-                  }}
-                >
-                  <FontAwesomeIcon
-                    icon={faInfoCircle}
-                    size={40}
-                    style={{
-                      color: "#CF56A1",
-                    }}
-                  />
-                </TouchableOpacity>
-              </View>
-            </ImageBackground>
-          </Animated.View>
-        </PanGestureHandler>
+              </ImageBackground>
+            </Animated.View>
+          </PanGestureHandler>
+        )}
       </View>
 
       <View style={styles.buttonsContainer}>
@@ -301,7 +333,7 @@ const SwapScreen = ({ navigation }: SwipeScreenProps) => {
             icon={faXmark}
             size={45}
             style={{
-              color: "#CF56A1",
+              color: '#CF56A1',
             }}
           />
         </TouchableOpacity>
@@ -313,98 +345,98 @@ const SwapScreen = ({ navigation }: SwipeScreenProps) => {
             icon={faHeart}
             size={40}
             style={{
-              color: "#FFF",
+              color: '#FFF',
             }}
           />
         </TouchableOpacity>
       </View>
     </View>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#FFFFFF",
-    minHeight: "100%",
-    width: "100%",
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
+    backgroundColor: '#FFFFFF',
+    minHeight: '100%',
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
   },
   gestureContainer: {
-    width: "100%",
-    height: "60%",
-    display: "flex",
-    alignItems: "center",
+    width: '100%',
+    height: '60%',
+    display: 'flex',
+    alignItems: 'center',
   },
   personContainer: {
-    width: "80%",
-    height: "100%",
+    width: '80%',
+    height: '100%',
     zIndex: -100,
-    overflow: "hidden",
+    overflow: 'hidden',
     borderRadius: 18,
   },
   yesLabel: {
     fontSize: 48,
-    fontFamily: "montBold",
-    color: "#32CD32",
-    marginRight: "auto",
+    fontFamily: 'montBold',
+    color: '#32CD32',
+    marginRight: 'auto',
     marginLeft: 10,
     marginTop: 20,
-    transform: [{ rotate: "-45deg" }],
+    transform: [{ rotate: '-45deg' }],
   },
   noLabel: {
     fontSize: 48,
-    fontFamily: "montBold",
-    color: "red",
-    marginLeft: "auto",
+    fontFamily: 'montBold',
+    color: 'red',
+    marginLeft: 'auto',
     marginRight: 10,
     marginTop: 20,
-    transform: [{ rotate: "45deg" }],
+    transform: [{ rotate: '45deg' }],
   },
   personInformationContainer: {
-    backgroundColor: "rgba(0,0,0,0.4)",
-    width: "100%",
-    height: "30%",
-    marginTop: "auto",
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-evenly",
+    backgroundColor: 'rgba(0,0,0,0.4)',
+    width: '100%',
+    height: '30%',
+    marginTop: 'auto',
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-evenly',
   },
   buttonsContainer: {
-    width: "100%",
-    height: "15%",
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-evenly",
+    width: '100%',
+    height: '15%',
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-evenly',
     marginTop: 10,
   },
   circleA: {
     height: 76,
     width: 76,
-    backgroundColor: "#FFF",
+    backgroundColor: '#FFF',
     borderRadius: 40,
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   circleB: {
     height: 76,
     width: 76,
-    backgroundColor: "#CF56A1",
+    backgroundColor: '#CF56A1',
     borderRadius: 40,
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   shadowProp: {
-    shadowColor: "#171717",
+    shadowColor: '#171717',
     shadowOffset: { width: -2, height: 4 },
     shadowOpacity: 0.2,
     shadowRadius: 3,
   },
-});
+})
 
-export default SwapScreen;
+export default SwapScreen

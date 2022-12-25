@@ -5,14 +5,14 @@ import {
   requestStart,
   requestSuccess,
 } from '../redux/registerSlice'
-import { API_URL } from '@env'
 import { Platform } from 'react-native'
+import { server } from '../tools/server'
 
 export const registerCall = async (data: any, dispatch: Dispatch) => {
   dispatch(requestStart())
   try {
     console.log(data)
-    const res = await axios.post(API_URL.toString() + '/auth/register', data)
+    const res = await axios.post(server() + '/auth/register', data)
     dispatch(requestSuccess())
     return res.data
   } catch (err: any) {
@@ -28,7 +28,7 @@ export const registerCall = async (data: any, dispatch: Dispatch) => {
 export const checkEmailCall = async (email: string, dispatch: Dispatch) => {
   dispatch(requestStart())
   try {
-    const res = await axios.post(API_URL.toString() + '/auth/register/check', {
+    const res = await axios.post(server() + '/auth/register/check', {
       email,
     })
     dispatch(requestSuccess())
@@ -52,10 +52,7 @@ export const uploadPhotosCall = async (photos: any, dispatch: Dispatch) => {
   })
 
   try {
-    const res = await axios.post(
-      API_URL.toString() + '/upload-images/',
-      formData
-    )
+    const res = await axios.post(server() + '/upload-images/', formData)
     dispatch(requestSuccess())
     return res.data
   } catch (err: any) {
