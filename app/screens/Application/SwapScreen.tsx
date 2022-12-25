@@ -17,6 +17,7 @@ import LocationBlock from '../../components/UI/LocationBlock'
 import { PanGestureHandler } from 'react-native-gesture-handler'
 import { useEffect, useState } from 'react'
 import { runOnJS } from 'react-native-reanimated'
+import LoadingDots from 'react-native-loading-dots'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { getPerson } from '../../controllers/matchController'
 import {
@@ -159,15 +160,23 @@ const SwapScreen = ({ navigation }: SwipeScreenProps) => {
   const loadPerson = async () => {
     setLoading(true)
     const result = await getPerson(state.accessToken, dispatch, 'Kielce')
-    console.log(result)
     if (result.success) {
-      setPerson(result.message)
-      setLoading(false)
+      setPerson(result.message[0])
     } else {
       setError(result.message)
-      setLoading(false)
     }
   }
+
+  useEffect(() => {
+    let isMounted = true
+
+    isMounted && setLoading(false)
+
+    return () => {
+      isMounted = false
+    }
+  }, [person])
+
   useEffect(() => {
     let isMounted = true
 
@@ -178,12 +187,8 @@ const SwapScreen = ({ navigation }: SwipeScreenProps) => {
     }
   }, [])
 
-  const personChangeHandler = () => {
-    if (personIndex < 5) {
-      setPersonIndex((current) => current + 1)
-    } else {
-      setPersonIndex(0)
-    }
+  const personChangeHandler = async () => {
+    loadPerson()
   }
 
   const panGestureEvent = useAnimatedGestureHandler({
@@ -227,12 +232,16 @@ const SwapScreen = ({ navigation }: SwipeScreenProps) => {
     <View style={styles.container}>
       <LocationBlock location={location} />
       <View style={[styles.gestureContainer, styles.shadowProp]}>
-        {!loading && (
+        {!loading && person ? (
           <PanGestureHandler onGestureEvent={panGestureEvent}>
             <Animated.View style={[styles.personContainer, rStyle]}>
               <ImageBackground
-                source={users[personIndex].photo}
-                style={{ width: '100%', height: '100%' }}
+                source={{ uri: person.images[0].url }}
+                resizeMode='cover'
+                style={{
+                  width: '100%',
+                  height: '100%',
+                }}
               >
                 {isPointedYes && <Text style={styles.yesLabel}>YES</Text>}
                 {isPointedNo && <Text style={styles.noLabel}>NO</Text>}
@@ -255,7 +264,9 @@ const SwapScreen = ({ navigation }: SwipeScreenProps) => {
                         overflow: 'hidden',
                         flexWrap: 'nowrap',
                       }}
-                    >{`${users[personIndex].name}, ${users[personIndex].age}`}</Text>
+                    >
+                      {person && person.username},{person && person.age}
+                    </Text>
                     <View
                       style={{
                         width: '60%',
@@ -273,7 +284,7 @@ const SwapScreen = ({ navigation }: SwipeScreenProps) => {
                           marginRight: 10,
                         }}
                       >
-                        {users[personIndex].location}
+                        {person && person.city}
                       </Text>
                       <FontAwesomeIcon
                         icon={faLocationDot}
@@ -288,7 +299,7 @@ const SwapScreen = ({ navigation }: SwipeScreenProps) => {
                           marginLeft: 5,
                         }}
                       >
-                        {users[personIndex].distance}km
+                        {Math.floor(Math.random() * 10)}km
                       </Text>
                     </View>
                     <Text
@@ -299,13 +310,13 @@ const SwapScreen = ({ navigation }: SwipeScreenProps) => {
                         marginTop: 5,
                       }}
                     >
-                      {`${users[personIndex].desc.slice(0, 50)}...`}
+                      {person && person.desc.slice(0, 50)}...
                     </Text>
                   </View>
                   <TouchableOpacity
                     onPress={() => {
                       navigation.navigate('profilInfo', {
-                        user: users[personIndex],
+                        user: person,
                       })
                     }}
                   >
@@ -321,6 +332,10 @@ const SwapScreen = ({ navigation }: SwipeScreenProps) => {
               </ImageBackground>
             </Animated.View>
           </PanGestureHandler>
+        ) : (
+          <View style={styles.loading}>
+            <LoadingDots />
+          </View>
         )}
       </View>
 
@@ -436,6 +451,14 @@ const styles = StyleSheet.create({
     shadowOffset: { width: -2, height: 4 },
     shadowOpacity: 0.2,
     shadowRadius: 3,
+  },
+  loading: {
+    width: '100%',
+    height: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 })
 
