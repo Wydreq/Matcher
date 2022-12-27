@@ -34,6 +34,8 @@ exports.like = async (
 ) => {
   const { userId, targetId } = req.body
 
+  let hasMatch = false
+
   try {
     const targetUser = await User.findById(targetId)
 
@@ -46,6 +48,8 @@ exports.like = async (
       return next(new ErrorHandler('This user is already liked', 400))
     }
     const like = new Like({ userId, targetId })
+    await like.save()
+
     const isMatch = await Like.findOne({ userId: targetId, targetId: userId })
 
     if (isMatch) {
@@ -62,13 +66,40 @@ exports.like = async (
           userTwo: targetId,
         })
         await match.save()
+        hasMatch = true
       } else {
         return next(new ErrorHandler('You are matched already!', 400))
       }
     }
-    const response = await like.save()
 
-    res.status(200).json({ success: true, message: 'Liked successfully' })
+    res
+      .status(200)
+      .json({ success: true, message: 'Liked successfully', hasMatch })
+  } catch (err) {
+    next(new ErrorHandler(err, 500))
+  }
+}
+exports.getAllMatches = async (
+  req: Request & { user: any },
+  res: Response,
+  next: Function
+) => {
+  const { userId } = req.query
+
+  try {
+    const matches = await Match.find({
+      $or: [{ userOne: userId }, { userTwo: userId }],
+    })
+    const matchedUserIds = matches.map((match) => {
+      return match.userOne === userId ? match.userTwo : match.userOne
+    })
+    const matcherUsers = await Promise.all(
+      matchedUserIds.map((id) => {
+        return User.findById(id)
+      })
+    )
+
+    res.status(200).json({ success: true, message: matcherUsers })
   } catch (err) {
     next(new ErrorHandler(err, 500))
   }
