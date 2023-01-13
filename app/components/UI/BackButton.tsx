@@ -1,8 +1,6 @@
 import {
-  TouchableWithoutFeedback,
   Image,
   StyleSheet,
-  View,
   TouchableOpacity,
 } from "react-native";
 

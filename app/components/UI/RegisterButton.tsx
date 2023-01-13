@@ -2,13 +2,9 @@ import React, { useState } from 'react'
 import {
   StyleSheet,
   Text,
-  View,
-  Button,
-  TextInput,
   TouchableOpacity,
 } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient'
-import { RegisterUserData } from '../../types/types'
 
 interface RegisterButtonProps {
   toScreen: string

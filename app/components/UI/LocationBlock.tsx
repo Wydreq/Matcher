@@ -35,14 +35,6 @@ const LocationBlock = (props: any) => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: "#FFFFFF",
-    minHeight: "100%",
-    width: "100%",
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-  },
   locationContainer: {
     height: 100,
     marginTop: 70,
@@ -54,10 +46,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     marginBottom: 10,
     alignItems: "center",
-  },
-  locationIcon: {
-    marginRight: 5,
-    marginTop: "2%",
   },
   arrowText: {
     fontSize: 16,

@@ -1,11 +1,10 @@
 import React from "react";
-import { StyleSheet, Text, View, Button, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, TouchableOpacity } from "react-native";
 
 interface EmailScreenProps {
   navigation: any;
 }
 const WelcomeButton = ({ navigation }: EmailScreenProps) => {
-  const buttonPressHandler = () => {};
 
   return (
     <TouchableOpacity

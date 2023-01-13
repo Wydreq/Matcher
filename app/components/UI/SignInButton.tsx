@@ -52,6 +52,5 @@ const styles = StyleSheet.create({
     fontSize: 28,
     fontFamily: 'montMedium',
   },
-  icon: {},
 })
 export default SignInButton
