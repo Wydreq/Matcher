@@ -14,7 +14,10 @@ interface ProfilInfoScreenProps {
   route: any;
   navigation: any;
 }
-const ProfileInfoScreen = ({ route, navigation }: ProfilInfoScreenProps) => {
+const StaticProfileInfoScreen = ({
+  route,
+  navigation,
+}: ProfilInfoScreenProps) => {
   const user = route.params.user;
   const hobbies = user.hobbies;
   console.log(hobbies);
@@ -33,7 +36,7 @@ const ProfileInfoScreen = ({ route, navigation }: ProfilInfoScreenProps) => {
     <View style={styles.container}>
       <View style={{ width: "100%", height: "45%" }}>
         <ImageBackground
-          source={{ uri: user.images[0].url }}
+          source={user.photo}
           resizeMode="cover"
           style={styles.photo}
         >
@@ -65,7 +68,7 @@ const ProfileInfoScreen = ({ route, navigation }: ProfilInfoScreenProps) => {
                   marginTop: 15,
                 }}
               >
-                {user.username}, {user.age}
+                {user.name}, {user.age}
               </Text>
               <View
                 style={{
@@ -252,4 +255,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ProfileInfoScreen;
+export default StaticProfileInfoScreen;

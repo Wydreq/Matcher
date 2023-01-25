@@ -41,6 +41,7 @@ import {
   faMessage,
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
+import StaticProfileInfoScreen from "./screens/Application/StaticProfilInfoScreen";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -332,6 +333,10 @@ export default function App() {
               options={{ title: "", gestureEnabled: false }}
             />
             <Stack.Screen name="profilInfo" component={ProfileInfoScreen} />
+            <Stack.Screen
+              name="staticProfilInfo"
+              component={StaticProfileInfoScreen}
+            />
           </Stack.Navigator>
         </NavigationContainer>
       </Provider>

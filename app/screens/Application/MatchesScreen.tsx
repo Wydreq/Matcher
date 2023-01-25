@@ -134,7 +134,7 @@ const MatchesScreen = ({ navigation }: MatchesScreenProps) => {
         key={user.id}
         style={{ width: "45%", height: 180, marginBottom: "5%" }}
         onPress={() => {
-          navigation.navigate("profilInfo", {
+          navigation.navigate("staticProfilInfo", {
             user: user,
           });
         }}

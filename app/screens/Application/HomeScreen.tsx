@@ -132,7 +132,7 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
       <TouchableOpacity
         key={user.id}
         onPress={() => {
-          navigation.navigate("profilInfo", {
+          navigation.navigate("staticProfilInfo", {
             user: user,
           });
         }}
@@ -172,7 +172,7 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => {
-            navigation.navigate("profilInfo", {
+            navigation.navigate("staticProfilInfo", {
               user: users[2],
             });
           }}

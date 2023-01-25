@@ -18,6 +18,9 @@ import {
 } from "../../controllers/registerController";
 import BackButton from "../../components/UI/BackButton";
 import { validators } from "../../validators/validators";
+import { faLocationCrosshairs } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import * as Location from "expo-location";
 
 interface EmailScreenProps {
   navigation: any;
@@ -27,11 +30,34 @@ const LocationScreen = ({ navigation }: EmailScreenProps) => {
   const [isDisabled, setIsDisabled] = useState(true);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-
+  const [errorMsg, setErrorMsg] = useState("");
   const dispatch = useDispatch();
   const state = useSelector((state: any) => state.registerData);
 
   console.log(state.pending);
+
+  const getLocationHandler = () => {
+    (async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== "granted") {
+        setErrorMsg("Permission to access location was denied");
+        return;
+      }
+
+      let location = await Location.getCurrentPositionAsync();
+      const { coords } = location;
+      const { latitude, longitude } = coords;
+      if (coords) {
+        let response = await Location.reverseGeocodeAsync({
+          latitude,
+          longitude,
+        });
+        const cityy = response[0].city.toString();
+        console.log(cityy);
+        setCity(cityy);
+      }
+    })();
+  };
 
   const registerHandler = async () => {
     ////const result = await registerCall(state.data, dispatch);
@@ -88,14 +114,27 @@ const LocationScreen = ({ navigation }: EmailScreenProps) => {
           <View style={styles.whiteContainer}>
             <BackButton navigation={navigation} />
             <Text style={styles.title}>Your Localization is...</Text>
-            <TextInput
-              pointerEvents="box-only"
-              style={styles.input}
-              onChangeText={(city) => setCity(city)}
-              value={city}
-              placeholder="Enter your city"
-              placeholderTextColor="#ABABAB"
-            />
+            <View style={styles.inputContainer}>
+              <TextInput
+                pointerEvents="box-only"
+                style={styles.input}
+                onChangeText={(city) => setCity(city)}
+                value={city}
+                placeholder="Enter your city"
+                placeholderTextColor="#ABABAB"
+              />
+              <TouchableOpacity onPress={getLocationHandler}>
+                <FontAwesomeIcon
+                  icon={faLocationCrosshairs}
+                  size={25}
+                  style={{
+                    color: "#CF56A1",
+                    marginTop: 2,
+                    marginRight: 2,
+                  }}
+                />
+              </TouchableOpacity>
+            </View>
             <Text style={styles.desc}>Your location will be public</Text>
             <Text style={styles.error}>{city && error && error}</Text>
             <TouchableOpacity
@@ -157,8 +196,8 @@ const styles = StyleSheet.create({
   },
   input: {
     width: "80%",
-    height: "10%",
-    marginTop: "20%",
+    // height: "10%",
+    paddingBottom: 10,
     borderBottomColor: "#1E1E1E",
     borderBottomWidth: 1,
     lineHeight: 35,
@@ -212,6 +251,14 @@ const styles = StyleSheet.create({
   error: {
     marginBottom: "2%",
     color: "red",
+  },
+  inputContainer: {
+    width: "90%",
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: "20%",
   },
 });
 export default LocationScreen;
